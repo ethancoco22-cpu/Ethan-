@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EC — Portfolio Marketing Digital</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --primary: #1A6DFF;
+    --primary-dark: #1258D6;
+    --primary-light: #5B9BFF;
+    --accent: #00C6FF;
+    --accent-2: #0099D6;
+    --dark: #070D1A;
+    --dark-2: #0D1525;
+    --dark-3: #111E35;
+    --card-bg: #142040;
+    --text: #E8EFF8;
+    --text-muted: #7A9AC0;
+    --border: rgba(26, 109, 255, 0.2);
+    --white: #FFFFFF;
+    --gradient: linear-gradient(135deg, #1A6DFF 0%, #00C6FF 100%);
+    --gradient-2: linear-gradient(135deg, #0099D6 0%, #1A6DFF 100%);
+    --shadow: 0 20px 60px rgba(0,0,0,0.5);
+    --shadow-card: 0 8px 32px rgba(0,0,0,0.4);
+    --radius: 16px;
+    --radius-sm: 8px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; background: var(--dark); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+/* ── NAV ── */
+#navbar {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 1000; padding: 1.2rem 0; transition: var(--transition);
+}
+#navbar.scrolled {
+    background: rgba(7,13,26,0.96); backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border); padding: 0.8rem 0; box-shadow: var(--shadow);
+}
+.nav-container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; }
+.nav-logo { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 800; color: var(--white); letter-spacing: -0.5px; }
+.nav-logo span { color: var(--primary); }
+.nav-links { display: flex; gap: 2.5rem; align-items: center; }
+.nav-links a { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); transition: var(--transition); position: relative; }
+.nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--gradient); border-radius: 2px; transition: var(--transition); }
+.nav-links a:hover, .nav-links a.active { color: var(--white); }
+.nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+.nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+.nav-toggle span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: var(--transition); }
+
+/* ── HERO ── */
+#hero {
+    min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center; gap: 4rem; padding: 8rem 2rem 4rem;
+    max-width: 1200px; margin: 0 auto; position: relative;
+}
+.hero-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.hero-blob { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.12; animation: float 8s ease-in-out infinite; }
+.blob-1 { width: 600px; height: 600px; background: var(--primary); top: -200px; left: -200px; }
+.blob-2 { width: 400px; height: 400px; background: var(--accent); top: 50%; right: -100px; animation-delay: -3s; }
+.blob-3 { width: 300px; height: 300px; background: var(--accent-2); bottom: -100px; left: 30%; animation-delay: -6s; }
+@keyframes float { 0%,100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-30px) scale(1.05); } }
+
+/* Poste badges */
+.hero-roles { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1.5rem; animation: fadeInDown 0.6s ease; }
+.role-badge {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: rgba(26,109,255,0.12); border: 1px solid rgba(26,109,255,0.35);
+    color: var(--primary-light); padding: 0.4rem 0.9rem;
+    border-radius: 50px; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.02em;
+}
+
+.hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.8vw, 3rem); font-weight: 800;
+    line-height: 1.15; color: var(--white); margin-bottom: 1rem;
+    animation: fadeInUp 0.8s ease 0.2s both;
+}
+.gradient-text { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+.hero-subtitle { font-size: 0.98rem; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.7; animation: fadeInUp 0.8s ease 0.3s both; }
+.typed { color: var(--primary-light); font-weight: 600; border-right: 2px solid var(--primary); padding-right: 2px; }
+
+.hero-lang { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; animation: fadeInUp 0.8s ease 0.4s both; }
+.lang-badge {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: rgba(0,198,255,0.08); border: 1px solid rgba(0,198,255,0.25);
+    color: var(--accent); padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.8rem; font-weight: 500;
+}
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeInUp 0.8s ease 0.5s both; }
+
+.btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.85rem 1.8rem; border-radius: 50px;
+    font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: var(--transition); border: none;
+}
+.btn-primary { background: var(--gradient); color: var(--white); box-shadow: 0 8px 24px rgba(26,109,255,0.35); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(26,109,255,0.5); }
+.btn-outline { background: transparent; color: var(--white); border: 1.5px solid rgba(255,255,255,0.25); }
+.btn-outline:hover { background: rgba(255,255,255,0.08); border-color: var(--white); transform: translateY(-2px); }
+
+/* Hero photo side */
+.hero-photo-side { position: relative; display: flex; justify-content: center; align-items: center; height: 480px; animation: fadeInRight 0.8s ease 0.4s both; }
+.hero-photo-ring {
+    position: relative; z-index: 2;
+    width: 280px; height: 280px; border-radius: 50%;
+    border: 4px solid transparent;
+    background: linear-gradient(var(--dark), var(--dark)) padding-box, var(--gradient) border-box;
+    overflow: hidden;
+    box-shadow: 0 0 60px rgba(26,109,255,0.35);
+}
+.hero-photo-ring img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+.photo-deco {
+    position: absolute; inset: -15px; border-radius: 50%;
+    border: 2px dashed rgba(26,109,255,0.3); animation: spin 25s linear infinite;
+}
+.floating-pill {
+    position: absolute; display: flex; align-items: center; gap: 0.6rem;
+    padding: 0.7rem 1.1rem; background: rgba(20,32,64,0.92);
+    border: 1px solid var(--border); border-radius: 40px;
+    backdrop-filter: blur(12px); box-shadow: var(--shadow-card);
+    font-size: 0.8rem; font-weight: 600; color: var(--white);
+    animation: float 5s ease-in-out infinite;
+}
+.floating-pill i { color: var(--primary-light); font-size: 1rem; }
+.pill-1 { top: 30px; left: -30px; animation-delay: 0s; }
+.pill-2 { top: 160px; right: -20px; animation-delay: -1.5s; }
+.pill-3 { bottom: 80px; left: -10px; animation-delay: -3s; }
+.pill-4 { bottom: 20px; right: 10px; animation-delay: -4.2s; }
+
+.scroll-hint {
+    grid-column: 1 / -1; display: flex; justify-content: center;
+    color: var(--text-muted); font-size: 1.1rem; animation: bounce 2s infinite;
+}
+@keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+/* ── SECTIONS ── */
+.section { padding: 6rem 0; }
+.section-dark { background: var(--dark-2); }
+.section-header { text-align: center; margin-bottom: 4rem; }
+.section-tag {
+    display: inline-block; background: rgba(26,109,255,0.12);
+    color: var(--primary-light); border: 1px solid rgba(26,109,255,0.3);
+    padding: 0.3rem 1rem; border-radius: 50px;
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase; margin-bottom: 1rem;
+}
+.section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 700; color: var(--white); margin-bottom: 0.8rem; }
+.section-subtitle { color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 0.93rem; }
+
+/* ── ABOUT ── */
+.about-grid { display: grid; grid-template-columns: 1fr 1.8fr; gap: 4rem; align-items: center; }
+.about-avatar-wrap { position: relative; display: flex; justify-content: center; }
+.about-photo {
+    width: 240px; height: 300px; border-radius: 24px; overflow: hidden;
+    border: 3px solid transparent;
+    background: linear-gradient(var(--card-bg), var(--card-bg)) padding-box, var(--gradient) border-box;
+    box-shadow: 0 20px 60px rgba(26,109,255,0.25);
+    position: relative; z-index: 1;
+}
+.about-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+.about-deco {
+    position: absolute; inset: -10px; border-radius: 28px;
+    border: 2px dashed rgba(26,109,255,0.25); animation: spin 20s linear infinite; z-index: 0;
+}
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+.about-text { color: var(--text-muted); margin-bottom: 1.1rem; line-height: 1.8; font-size: 0.94rem; }
+.about-text.lead { font-size: 1rem; color: var(--text); }
+.about-text strong { color: var(--white); font-weight: 600; }
+.about-stats { display: flex; gap: 2rem; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border); flex-wrap: wrap; }
+.stat-item { display: flex; flex-direction: column; gap: 0.15rem; }
+.stat-number { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.stat-label { font-size: 0.78rem; color: var(--text-muted); font-weight: 500; }
+
+.linkedin-btn {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    margin-top: 1.8rem; padding: 0.75rem 1.5rem;
+    background: rgba(10,102,194,0.15); border: 1.5px solid rgba(10,102,194,0.4);
+    border-radius: 50px; color: #5BA5D5; font-size: 0.88rem; font-weight: 600;
+    transition: var(--transition);
+}
+.linkedin-btn:hover { background: rgba(10,102,194,0.25); color: var(--white); transform: translateY(-2px); }
+
+/* ── COMPÉTENCES ── */
+.skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 4rem; }
+.skill-category { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; transition: var(--transition); }
+.skill-category:hover { border-color: var(--primary); transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+.skill-cat-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+.skill-cat-icon { width: 48px; height: 48px; background: var(--gradient); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: white; flex-shrink: 0; }
+.skill-cat-header h3 { font-size: 1.02rem; font-weight: 700; color: var(--white); }
+.skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.4rem; }
+.skill-tag { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.28rem 0.7rem; border-radius: 6px; font-size: 0.76rem; font-weight: 600; }
+.tag-primary { background: rgba(26,109,255,0.12); color: var(--primary-light); border: 1px solid rgba(26,109,255,0.25); }
+.tag-secondary { background: rgba(0,198,255,0.08); color: var(--accent); border: 1px solid rgba(0,198,255,0.2); }
+.tag-accent { background: rgba(0,153,214,0.1); color: #5BC8E8; border: 1px solid rgba(0,153,214,0.2); }
+.skill-list { display: flex; flex-direction: column; gap: 0.55rem; }
+.skill-list li { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.84rem; color: var(--text-muted); line-height: 1.5; }
+.skill-list li i { color: var(--primary); font-size: 0.68rem; margin-top: 0.32rem; flex-shrink: 0; }
+
+.languages-section { border-top: 1px solid var(--border); padding-top: 3rem; }
+.languages-title { font-size: 1.05rem; font-weight: 700; color: var(--white); margin-bottom: 2rem; display: flex; align-items: center; gap: 0.7rem; }
+.languages-title i { color: var(--primary); }
+.languages-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.language-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; display: flex; gap: 1.2rem; align-items: flex-start; transition: var(--transition); }
+.language-card:hover { border-color: var(--primary); transform: translateY(-2px); }
+.language-flag { font-size: 2rem; flex-shrink: 0; }
+.language-info { display: flex; flex-direction: column; gap: 0.3rem; flex: 1; }
+.language-name { font-weight: 700; color: var(--white); font-size: 0.93rem; }
+.language-level { font-size: 0.78rem; color: var(--primary-light); font-weight: 600; }
+.language-bar { height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; margin: 0.3rem 0; }
+.language-progress { height: 100%; background: var(--gradient); border-radius: 2px; transition: width 1.5s ease; }
+.language-cert { font-size: 0.73rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.4rem; }
+.language-cert i { color: var(--accent); }
+
+/* ── RÉALISATIONS ── */
+#realisations { padding: 6rem 0; }
+.creations-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.creation-card {
+    border-radius: var(--radius); overflow: hidden;
+    border: 1px solid var(--border); transition: var(--transition);
+    background: var(--card-bg); position: relative; cursor: pointer;
+}
+.creation-card:hover { transform: translateY(-6px); border-color: var(--primary); box-shadow: 0 24px 50px rgba(0,0,0,0.5); }
+.creation-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block; transition: transform 0.4s ease; }
+.creation-card:hover img { transform: scale(1.04); }
+.creation-overlay {
+    position: absolute; inset: 0; background: linear-gradient(to top, rgba(7,13,26,0.9) 0%, transparent 50%);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 1.2rem; opacity: 0; transition: var(--transition);
+}
+.creation-card:hover .creation-overlay { opacity: 1; }
+.creation-label { font-size: 0.8rem; color: var(--primary-light); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+.creation-title { font-size: 0.95rem; color: var(--white); font-weight: 700; margin-top: 0.2rem; }
+
+/* ── EXPÉRIENCE ── */
+.timeline { position: relative; padding-left: 2rem; }
+.timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--primary), var(--accent), transparent); }
+.timeline-item { position: relative; margin-bottom: 3rem; opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.timeline-item.visible { opacity: 1; transform: translateY(0); }
+.timeline-dot { position: absolute; left: -2.45rem; top: 1.5rem; width: 14px; height: 14px; border-radius: 50%; background: var(--gradient); border: 3px solid var(--dark); box-shadow: 0 0 0 3px rgba(26,109,255,0.3); }
+.timeline-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; transition: var(--transition); }
+.timeline-card:hover { border-color: var(--primary); box-shadow: var(--shadow-card); transform: translateX(4px); }
+.timeline-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; gap: 1rem; flex-wrap: wrap; }
+.timeline-role { font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 0.25rem; }
+.timeline-company { font-size: 0.84rem; color: var(--primary-light); font-weight: 500; }
+.timeline-tag { padding: 0.3rem 0.8rem; background: rgba(26,109,255,0.12); color: var(--primary-light); border-radius: 50px; font-size: 0.73rem; font-weight: 600; border: 1px solid rgba(26,109,255,0.28); white-space: nowrap; }
+
+/* Impact highlight */
+.impact-box {
+    display: flex; align-items: center; gap: 1rem;
+    background: linear-gradient(135deg, rgba(26,109,255,0.12), rgba(0,198,255,0.06));
+    border: 1px solid rgba(26,109,255,0.3); border-radius: 10px;
+    padding: 0.9rem 1.2rem; margin-bottom: 1.2rem;
+}
+.impact-number { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; white-space: nowrap; }
+.impact-desc { font-size: 0.84rem; color: var(--text-muted); line-height: 1.4; }
+.impact-desc strong { color: var(--white); }
+
+.timeline-desc { font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1.1rem; }
+.timeline-tasks { display: flex; flex-direction: column; gap: 0.45rem; margin-bottom: 1.1rem; }
+.timeline-tasks li { display: flex; gap: 0.6rem; font-size: 0.84rem; color: var(--text-muted); align-items: flex-start; }
+.timeline-tasks li i { color: var(--primary); font-size: 0.68rem; margin-top: 0.35rem; flex-shrink: 0; }
+.timeline-tools { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.timeline-tools span { padding: 0.22rem 0.65rem; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.73rem; color: var(--text-muted); font-weight: 500; }
+
+/* ── SECTEURS ── */
+.sectors-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.sector-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.8rem; text-align: center; transition: var(--transition); position: relative; overflow: hidden; }
+.sector-card::before { content: ''; position: absolute; inset: 0; background: var(--gradient); opacity: 0; transition: var(--transition); }
+.sector-card:hover { transform: translateY(-6px); border-color: var(--primary); box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
+.sector-card:hover::before { opacity: 0.04; }
+.sector-icon { width: 56px; height: 56px; border-radius: 50%; background: var(--gradient); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: white; margin: 0 auto 1.1rem; transition: var(--transition); }
+.sector-card:hover .sector-icon { transform: scale(1.1) rotate(5deg); }
+.sector-card h3 { font-size: 0.97rem; font-weight: 700; color: var(--white); margin-bottom: 0.6rem; }
+.sector-card p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.55; }
+
+/* ── FOOTER LÉGER ── */
+#footer { background: var(--dark-3); border-top: 1px solid var(--border); padding: 2.5rem 0 1.5rem; }
+.footer-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem; margin-bottom: 1.5rem; }
+.footer-logo { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 800; color: var(--white); display: block; margin-bottom: 0.4rem; }
+.footer-logo span { color: var(--primary); }
+.footer-brand p { font-size: 0.8rem; color: var(--text-muted); }
+.footer-links { display: flex; gap: 2rem; flex-wrap: wrap; }
+.footer-links a { font-size: 0.83rem; color: var(--text-muted); transition: var(--transition); }
+.footer-links a:hover { color: var(--primary-light); }
+.footer-bottom { border-top: 1px solid var(--border); padding-top: 1.2rem; text-align: center; }
+.footer-bottom p { font-size: 0.78rem; color: var(--text-muted); }
+
+/* ── LIGHTBOX ── */
+.lightbox { position: fixed; inset: 0; z-index: 9000; display: none; align-items: center; justify-content: center; background: rgba(0,0,0,0.88); backdrop-filter: blur(6px); }
+.lightbox.open { display: flex; }
+.lightbox-img { max-width: 90vw; max-height: 90vh; border-radius: 12px; box-shadow: 0 30px 80px rgba(0,0,0,0.7); }
+.lightbox-close { position: absolute; top: 1.5rem; right: 2rem; font-size: 2rem; color: var(--white); cursor: pointer; opacity: 0.7; transition: var(--transition); }
+.lightbox-close:hover { opacity: 1; transform: scale(1.1); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeInRight { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+    #hero { grid-template-columns: 1fr; text-align: center; padding-top: 7rem; }
+    .hero-photo-side { display: none; }
+    .hero-roles, .hero-lang, .hero-actions { justify-content: center; }
+    .scroll-hint { grid-column: 1; }
+    .about-grid { grid-template-columns: 1fr; }
+    .about-avatar-wrap { margin-bottom: 2rem; }
+    .skills-grid { grid-template-columns: 1fr 1fr; }
+    .sectors-grid { grid-template-columns: repeat(2, 1fr); }
+    .languages-grid { grid-template-columns: 1fr 1fr; }
+    .creations-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+    .nav-links { position: fixed; top: 0; right: -100%; height: 100vh; width: 280px; background: var(--dark-3); flex-direction: column; justify-content: center; gap: 2rem; padding: 2rem; transition: var(--transition); border-left: 1px solid var(--border); z-index: 999; }
+    .nav-links.open { right: 0; }
+    .nav-links a { font-size: 1.1rem; }
+    .nav-toggle { display: flex; z-index: 1000; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .sectors-grid { grid-template-columns: 1fr 1fr; }
+    .footer-content { flex-direction: column; text-align: center; }
+    .footer-links { justify-content: center; }
+    .about-stats { gap: 1.5rem; }
+    .creations-grid { grid-template-columns: 1fr 1fr; }
+    .languages-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+    .sectors-grid, .creations-grid { grid-template-columns: 1fr; }
+    .container { padding: 0 1.2rem; }
+    .hero-actions { flex-direction: column; align-items: center; }
+}
+    </style>
+</head>
+<body>
+
+<!-- ── NAVIGATION ── -->
+<nav id="navbar">
+    <div class="nav-container">
+        <a href="#hero" class="nav-logo">EC<span>.</span></a>
+        <button class="nav-toggle" id="navToggle" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#about">À propos</a></li>
+            <li><a href="#competences">Compétences</a></li>
+            <li><a href="#experience">Expérience</a></li>
+            <li><a href="#realisations">Réalisations</a></li>
+            <li><a href="#secteurs">Secteurs</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+    <div class="hero-bg">
+        <div class="hero-blob blob-1"></div>
+        <div class="hero-blob blob-2"></div>
+        <div class="hero-blob blob-3"></div>
+    </div>
+
+    <div class="hero-content">
+        <div class="hero-roles">
+            <span class="role-badge"><i class="fas fa-chart-bar"></i> Social Media Manager</span>
+            <span class="role-badge"><i class="fas fa-bullseye"></i> Media Buyer</span>
+            <span class="role-badge"><i class="fas fa-route"></i> Social Media Strategist</span>
+            <span class="role-badge"><i class="fas fa-funnel-dollar"></i> Growth Marketer</span>
+        </div>
+        <h1 class="hero-title">
+            Acquisition digitale<br>
+            &amp; <span class="gradient-text">génération de leads</span>
+        </h1>
+        <p class="hero-subtitle">
+            Expert en campagnes paid social multi-canaux · <span class="typed"></span>
+        </p>
+        <div class="hero-lang">
+            <span class="lang-badge"><i class="fas fa-certificate"></i> TOEIC 905/990 · Anglais C1/C2</span>
+            <span class="lang-badge"><i class="fas fa-globe"></i> Espagnol A1</span>
+        </div>
+        <div class="hero-actions">
+            <a href="#realisations" class="btn btn-primary">
+                <i class="fas fa-images"></i> Voir mes réalisations
+            </a>
+            <a href="#experience" class="btn btn-outline">
+                <i class="fas fa-briefcase"></i> Mon parcours
+            </a>
+        </div>
+    </div>
+
+    <div class="hero-photo-side">
+        <div class="hero-photo-ring">
+            <img src="https://www.genspark.ai/api/files/s/fGg4GHyM" alt="Photo de profil" onerror="this.parentElement.style.background='var(--gradient)'; this.style.display='none'">
+        </div>
+        <div class="photo-deco"></div>
+        <div class="floating-pill pill-1">
+            <i class="fab fa-google"></i> Google Ads
+        </div>
+        <div class="floating-pill pill-2">
+            <i class="fab fa-meta"></i> Meta Ads
+        </div>
+        <div class="floating-pill pill-3">
+            <i class="fab fa-tiktok"></i> TikTok Ads
+        </div>
+        <div class="floating-pill pill-4">
+            <i class="fab fa-wordpress"></i> WordPress
+        </div>
+    </div>
+
+    <a href="#about" class="scroll-hint"><i class="fas fa-chevron-down"></i></a>
+</section>
+
+<!-- ── À PROPOS ── -->
+<section id="about" class="section">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">Qui suis-je ?</span>
+            <h2 class="section-title">À propos</h2>
+        </div>
+        <div class="about-grid">
+            <div class="about-avatar-wrap">
+                <div class="about-photo">
+                    <img src="https://www.genspark.ai/api/files/s/fGg4GHyM" alt="Photo de profil">
+                </div>
+                <div class="about-deco"></div>
+            </div>
+            <div class="about-content">
+                <p class="about-text lead">
+                    Spécialiste en <strong>acquisition payante et génération de leads</strong>, je conçois et pilote des stratégies multi-canaux pour produire des prospects qualifiés à grande échelle.
+                </p>
+                <p class="about-text">
+                    Mes terrains de jeu quotidiens sont <strong>Google Ads, Meta Ads, TikTok Ads, Pinterest Ads et Snapchat Ads</strong>. Je couvre l'intégralité du cycle campagne : stratégie, création des visuels, landing pages, suivi des performances et optimisation continue.
+                </p>
+                <p class="about-text">
+                    Je prends également en charge la <strong>gestion de sites WordPress</strong> et le <strong>pilotage des campagnes emailing</strong> (base de données, budgets, plannings d'envoi).
+                </p>
+
+                <div class="about-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">1M+</span>
+                        <span class="stat-label">de CA généré</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">5</span>
+                        <span class="stat-label">canaux paid social</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">6</span>
+                        <span class="stat-label">secteurs maîtrisés</span>
+                    </div>
+                </div>
+
+                <a href="https://linkedin.com" target="_blank" class="linkedin-btn">
+                    <i class="fab fa-linkedin"></i> Mon profil LinkedIn
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── COMPÉTENCES ── -->
+<section id="competences" class="section section-dark">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">Savoir-faire</span>
+            <h2 class="section-title">Compétences</h2>
+        </div>
+
+        <div class="skills-grid">
+            <div class="skill-category">
+                <div class="skill-cat-header">
+                    <div class="skill-cat-icon"><i class="fas fa-bullhorn"></i></div>
+                    <h3>Paid Social &amp; Search</h3>
+                </div>
+                <div class="skill-tags">
+                    <span class="skill-tag tag-primary"><i class="fab fa-google"></i> Google Ads</span>
+                    <span class="skill-tag tag-primary"><i class="fab fa-meta"></i> Meta Ads</span>
+                    <span class="skill-tag tag-primary"><i class="fab fa-tiktok"></i> TikTok Ads</span>
+                    <span class="skill-tag tag-primary"><i class="fab fa-pinterest"></i> Pinterest Ads</span>
+                    <span class="skill-tag tag-primary"><i class="fab fa-snapchat"></i> Snapchat Ads</span>
+                </div>
+                <ul class="skill-list">
+                    <li><i class="fas fa-check"></i> Création de landing pages et formulaires</li>
+                    <li><i class="fas fa-check"></i> Production de visuels publicitaires</li>
+                    <li><i class="fas fa-check"></i> Analyse des KPIs et optimisation</li>
+                    <li><i class="fas fa-check"></i> Génération de leads qualifiés</li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <div class="skill-cat-header">
+                    <div class="skill-cat-icon"><i class="fas fa-envelope"></i></div>
+                    <h3>Email &amp; CRM</h3>
+                </div>
+                <div class="skill-tags">
+                    <span class="skill-tag tag-secondary"><i class="fas fa-envelope-open-text"></i> Email Marketing</span>
+                    <span class="skill-tag tag-secondary"><i class="fas fa-database"></i> Database Management</span>
+                </div>
+                <ul class="skill-list">
+                    <li><i class="fas fa-check"></i> Déploiement de kits mail</li>
+                    <li><i class="fas fa-check"></i> Segmentation de la base de données</li>
+                    <li><i class="fas fa-check"></i> Pilotage budget et planning d'envoi</li>
+                    <li><i class="fas fa-check"></i> Analyse des taux d'ouverture et de clic</li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <div class="skill-cat-header">
+                    <div class="skill-cat-icon"><i class="fas fa-laptop-code"></i></div>
+                    <h3>Web &amp; Outils</h3>
+                </div>
+                <div class="skill-tags">
+                    <span class="skill-tag tag-accent"><i class="fab fa-wordpress"></i> WordPress</span>
+                    <span class="skill-tag tag-accent"><i class="fas fa-file-excel"></i> Excel</span>
+                </div>
+                <ul class="skill-list">
+                    <li><i class="fas fa-check"></i> Conception de sites vitrines</li>
+                    <li><i class="fas fa-check"></i> Benchmark concurrentiel</li>
+                    <li><i class="fas fa-check"></i> Mise en place de charte graphique</li>
+                    <li><i class="fas fa-check"></i> Gestion hébergement et nom de domaine</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="languages-section">
+            <h3 class="languages-title"><i class="fas fa-language"></i> Langues</h3>
+            <div class="languages-grid">
+                <div class="language-card">
+                    <div class="language-flag">🇫🇷</div>
+                    <div class="language-info">
+                        <span class="language-name">Français</span>
+                        <span class="language-level">Natif</span>
+                        <div class="language-bar"><div class="language-progress" style="width:100%"></div></div>
+                        <span class="language-cert"><i class="fas fa-star"></i> Langue maternelle</span>
+                    </div>
+                </div>
+                <div class="language-card">
+                    <div class="language-flag">🇬🇧</div>
+                    <div class="language-info">
+                        <span class="language-name">Anglais</span>
+                        <span class="language-level">C1/C2</span>
+                        <div class="language-bar"><div class="language-progress" style="width:92%"></div></div>
+                        <span class="language-cert"><i class="fas fa-certificate"></i> TOEIC 905/990</span>
+                    </div>
+                </div>
+                <div class="language-card">
+                    <div class="language-flag">🇪🇸</div>
+                    <div class="language-info">
+                        <span class="language-name">Espagnol</span>
+                        <span class="language-level">A1</span>
+                        <div class="language-bar"><div class="language-progress" style="width:20%"></div></div>
+                        <span class="language-cert"><i class="fas fa-graduation-cap"></i> Notions</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── RÉALISATIONS ── -->
+<section id="realisations" class="section">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">Créations publicitaires</span>
+            <h2 class="section-title">Réalisations</h2>
+            <p class="section-subtitle">Exemples de visuels conçus et déployés dans le cadre de campagnes d'acquisition</p>
+        </div>
+
+        <div class="creations-grid">
+            <div class="creation-card" onclick="openLightbox('https://www.genspark.ai/api/files/s/IB7jxAHc')">
+                <img src="https://www.genspark.ai/api/files/s/IB7jxAHc" alt="PER Épargne Retraite">
+                <div class="creation-overlay">
+                    <span class="creation-label">Banque &amp; PER</span>
+                    <span class="creation-title">Épargne retraite optimisée</span>
+                </div>
+            </div>
+            <div class="creation-card" onclick="openLightbox('https://www.genspark.ai/api/files/s/H9IHoFvw')">
+                <img src="https://www.genspark.ai/api/files/s/H9IHoFvw" alt="PER 250 000 euros">
+                <div class="creation-overlay">
+                    <span class="creation-label">Banque &amp; PER</span>
+                    <span class="creation-title">Construisez votre capital</span>
+                </div>
+            </div>
+            <div class="creation-card" onclick="openLightbox('https://www.genspark.ai/api/files/s/7fmGsMwZ')">
+                <img src="https://www.genspark.ai/api/files/s/7fmGsMwZ" alt="Essai Gratuit Appareils Auditifs">
+                <div class="creation-overlay">
+                    <span class="creation-label">Appareils auditifs</span>
+                    <span class="creation-title">Essai gratuit 1 mois</span>
+                </div>
+            </div>
+            <div class="creation-card" onclick="openLightbox('https://www.genspark.ai/api/files/s/PJSAjqJ3')">
+                <img src="https://www.genspark.ai/api/files/s/PJSAjqJ3" alt="Bilan Auditif Gratuit">
+                <div class="creation-overlay">
+                    <span class="creation-label">Appareils auditifs</span>
+                    <span class="creation-title">Bilan auditif gratuit</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── EXPÉRIENCE ── -->
+<section id="experience" class="section section-dark">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">Parcours</span>
+            <h2 class="section-title">Expériences professionnelles</h2>
+        </div>
+
+        <div class="timeline">
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <div class="timeline-header">
+                        <div>
+                            <h3 class="timeline-role">Chargé de Marketing Digital — Media Buyer</h3>
+                            <span class="timeline-company">Acquisition &amp; Lead Generation</span>
+                        </div>
+                        <span class="timeline-tag">Paid Social</span>
+                    </div>
+                    <div class="impact-box">
+                        <span class="impact-number">+1 000 000 €</span>
+                        <span class="impact-desc"><strong>de chiffre d'affaires généré</strong> grâce aux campagnes d'acquisition pilotées sur plusieurs canaux simultanément</span>
+                    </div>
+                    <p class="timeline-desc">Gestion des campagnes publicitaires multi-canaux (Google Ads, Meta Ads, TikTok Ads, Pinterest Ads, Snapchat Ads) dans l'objectif de récolter des leads qualifiés pour différents secteurs d'activité.</p>
+                    <ul class="timeline-tasks">
+                        <li><i class="fas fa-check"></i> Création et optimisation de campagnes Google Ads et Meta Ads</li>
+                        <li><i class="fas fa-check"></i> Conception de landing pages et formulaires de capture</li>
+                        <li><i class="fas fa-check"></i> Production de visuels publicitaires (statiques et vidéo)</li>
+                        <li><i class="fas fa-check"></i> Analyse des KPIs et reporting hebdomadaire des performances</li>
+                    </ul>
+                    <div class="timeline-tools">
+                        <span>Google Ads</span><span>Meta Ads</span><span>TikTok Ads</span><span>Pinterest Ads</span><span>Snapchat Ads</span><span>Analytics</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <div class="timeline-header">
+                        <div>
+                            <h3 class="timeline-role">Gestionnaire de Site WordPress</h3>
+                            <span class="timeline-company">Conception &amp; Développement Web</span>
+                        </div>
+                        <span class="timeline-tag">Web</span>
+                    </div>
+                    <p class="timeline-desc">Conception de sites internet via WordPress : réalisation de sites vitrines, benchmark concurrentiel, mise en place d'une charte graphique, gestion de l'hébergement et du nom de domaine.</p>
+                    <ul class="timeline-tasks">
+                        <li><i class="fas fa-check"></i> Réalisation de sites vitrines sur-mesure</li>
+                        <li><i class="fas fa-check"></i> Benchmark concurrentiel et analyse de marché</li>
+                        <li><i class="fas fa-check"></i> Création et application de charte graphique</li>
+                        <li><i class="fas fa-check"></i> Gestion de l'hébergement et du nom de domaine</li>
+                    </ul>
+                    <div class="timeline-tools">
+                        <span>WordPress</span><span>SEO</span><span>Design</span><span>Hosting</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <div class="timeline-header">
+                        <div>
+                            <h3 class="timeline-role">Responsable Campagnes Emailing</h3>
+                            <span class="timeline-company">CRM &amp; Email Marketing</span>
+                        </div>
+                        <span class="timeline-tag">CRM</span>
+                    </div>
+                    <p class="timeline-desc">Pilotage des campagnes emailing client : déploiement de kits mail, gestion de la base de données et du budget, mise en place d'un planning d'envoi structuré.</p>
+                    <ul class="timeline-tasks">
+                        <li><i class="fas fa-check"></i> Déploiement et gestion des kits mail</li>
+                        <li><i class="fas fa-check"></i> Segmentation et entretien de la base de données</li>
+                        <li><i class="fas fa-check"></i> Optimisation du budget emailing</li>
+                        <li><i class="fas fa-check"></i> Mise en place d'un planning d'envoi optimisé</li>
+                    </ul>
+                    <div class="timeline-tools">
+                        <span>Email Marketing</span><span>CRM</span><span>Excel</span><span>Base de données</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ── SECTEURS ── -->
+<section id="secteurs" class="section">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">Expertise sectorielle</span>
+            <h2 class="section-title">Secteurs maîtrisés</h2>
+            <p class="section-subtitle">Une expérience multi-sectorielle pour une approche adaptée à chaque marché</p>
+        </div>
+        <div class="sectors-grid">
+            <div class="sector-card">
+                <div class="sector-icon"><i class="fas fa-car"></i></div>
+                <h3>Automobile</h3>
+                <p>Génération de leads pour concessionnaires et services automobiles</p>
+            </div>
+            <div class="sector-card">
+                <div class="sector-icon"><i class="fas fa-wifi"></i></div>
+                <h3>Fournisseurs d'accès Internet</h3>
+                <p>Acquisition clients pour FAI et opérateurs télécom</p>
+            </div>
+            <div class="sector-card">
+                <div class="sector-icon"><i class="fas fa-bolt"></i></div>
+                <h3>Énergie</h3>
+                <p>Campagnes de changement de fournisseur d'énergie</p>
+            </div>
+            <div class="sector-card">
+                <div class="sector-icon"><i class="fas fa-piggy-bank"></i></div>
+                <h3>Banque &amp; PER</h3>
+                <p>Leads qualifiés pour produits bancaires et plans d'épargne retraite</p>
+            </div>
+            <div class="sector-card">
+                <div class="sector-icon"><i class="fas fa-hand-holding-usd"></i></div>
+                <h3>Rachat de crédit</h3>
+                <p>Génération de dossiers pour organismes de rachat de crédit</p>
+            </div>
+            <div class="sector-card">
+                <div class="sector-icon"><i class="fas fa-assistive-listening-systems"></i></div>
+                <h3>Appareils auditifs</h3>
+                <p>Acquisition de leads qualifiés pour audioprothésistes</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer id="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <span class="footer-logo">EC<span>.</span></span>
+                <p>Media Buyer · Social Media Manager · Growth Marketer</p>
+            </div>
+            <div class="footer-links">
+                <a href="#about">À propos</a>
+                <a href="#competences">Compétences</a>
+                <a href="#experience">Expérience</a>
+                <a href="#realisations">Réalisations</a>
+                <a href="#secteurs">Secteurs</a>
+                <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 · Portfolio Marketing Digital</p>
+        </div>
+    </div>
+</footer>
+
+<!-- ── LIGHTBOX ── -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <span class="lightbox-close" onclick="closeLightbox()"><i class="fas fa-times"></i></span>
+    <img class="lightbox-img" id="lightboxImg" src="" alt="Création publicitaire">
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    // NAVBAR SCROLL
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        navbar.classList.toggle('scrolled', window.scrollY > 60);
+        updateActiveNav();
+    });
+
+    // MOBILE MENU
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    navToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('open');
+        const spans = navToggle.querySelectorAll('span');
+        if (navLinks.classList.contains('open')) {
+            spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+            spans[1].style.opacity = '0';
+            spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+        } else {
+            spans[0].style.transform = '';
+            spans[1].style.opacity = '';
+            spans[2].style.transform = '';
+        }
+    });
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('open');
+            navToggle.querySelectorAll('span').forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+        });
+    });
+
+    // ACTIVE NAV
+    function updateActiveNav() {
+        const sections = document.querySelectorAll('section[id]');
+        const scrollPos = window.scrollY + 120;
+        sections.forEach(section => {
+            const id = section.getAttribute('id');
+            const navLink = document.querySelector(`.nav-links a[href="#${id}"]`);
+            if (navLink) {
+                if (scrollPos >= section.offsetTop && scrollPos < section.offsetTop + section.offsetHeight) {
+                    document.querySelectorAll('.nav-links a').forEach(l => l.classList.remove('active'));
+                    navLink.classList.add('active');
+                }
+            }
+        });
+    }
+
+    // TIMELINE ANIMATION
+    const tlObs = new IntersectionObserver((entries) => {
+        entries.forEach((e, i) => {
+            if (e.isIntersecting) {
+                setTimeout(() => e.target.classList.add('visible'), i * 180);
+                tlObs.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.timeline-item').forEach(el => tlObs.observe(el));
+
+    // SECTOR ANIMATION
+    const secObs = new IntersectionObserver((entries) => {
+        entries.forEach((e, i) => {
+            if (e.isIntersecting) {
+                setTimeout(() => { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; }, i * 90);
+                secObs.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.sector-card').forEach(el => {
+        el.style.opacity = '0'; el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.55s ease, transform 0.55s ease, border-color 0.3s, box-shadow 0.3s';
+        secObs.observe(el);
+    });
+
+    // SKILL ANIMATION
+    const skillObs = new IntersectionObserver((entries) => {
+        entries.forEach((e, i) => {
+            if (e.isIntersecting) {
+                setTimeout(() => { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; }, i * 120);
+                skillObs.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.skill-category').forEach(el => {
+        el.style.opacity = '0'; el.style.transform = 'translateY(25px)';
+        el.style.transition = 'opacity 0.55s ease, transform 0.55s ease, border-color 0.3s, box-shadow 0.3s';
+        skillObs.observe(el);
+    });
+
+    // CREATION CARDS ANIMATION
+    const cardObs = new IntersectionObserver((entries) => {
+        entries.forEach((e, i) => {
+            if (e.isIntersecting) {
+                setTimeout(() => { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0) scale(1)'; }, i * 100);
+                cardObs.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.creation-card').forEach(el => {
+        el.style.opacity = '0'; el.style.transform = 'translateY(20px) scale(0.97)';
+        el.style.transition = 'opacity 0.5s ease, transform 0.5s ease, border-color 0.3s, box-shadow 0.3s';
+        cardObs.observe(el);
+    });
+
+    // LANG BARS
+    const barObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                const bar = e.target;
+                const w = bar.dataset.w;
+                setTimeout(() => { bar.style.width = w; }, 300);
+                barObs.unobserve(bar);
+            }
+        });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('.language-progress').forEach(bar => {
+        bar.dataset.w = bar.style.width;
+        bar.style.width = '0%';
+        barObs.observe(bar);
+    });
+
+    // STATS COUNTER
+    const cntObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                const el = e.target;
+                const raw = el.textContent.trim();
+                if (raw === '1M+') {
+                    let t = performance.now();
+                    const run = (now) => {
+                        const p = Math.min((now - t) / 1400, 1);
+                        const v = Math.round(1000000 * (1 - Math.pow(1 - p, 3)));
+                        el.textContent = (v >= 1000000 ? '1M' : Math.round(v/1000) + 'K') + '+';
+                        if (p < 1) requestAnimationFrame(run);
+                    };
+                    requestAnimationFrame(run);
+                } else {
+                    const num = parseFloat(raw);
+                    if (!isNaN(num)) {
+                        const suffix = raw.replace(/[\d.]/g, '');
+                        let t = performance.now();
+                        const run = (now) => {
+                            const p = Math.min((now - t) / 1200, 1);
+                            el.textContent = Math.round(num * (1 - Math.pow(1 - p, 3))) + suffix;
+                            if (p < 1) requestAnimationFrame(run);
+                        };
+                        requestAnimationFrame(run);
+                    }
+                }
+                cntObs.unobserve(el);
+            }
+        });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('.stat-number').forEach(el => cntObs.observe(el));
+
+    // SMOOTH SCROLL
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', function(e) {
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                e.preventDefault();
+                window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
+            }
+        });
+    });
+
+    // TYPING EFFECT
+    const subtitle = document.querySelector('.hero-subtitle');
+    if (subtitle) {
+        const words = ['Google Ads', 'Meta Ads', 'TikTok Ads', 'Pinterest Ads', 'Snapchat Ads'];
+        let wi = 0, ci = 0, del = false;
+        const typed = subtitle.querySelector('.typed');
+        function type() {
+            const w = words[wi];
+            if (del) ci--; else ci++;
+            if (typed) typed.textContent = w.substring(0, ci);
+            let delay = del ? 55 : 95;
+            if (!del && ci === w.length) { delay = 2200; del = true; }
+            else if (del && ci === 0) { del = false; wi = (wi + 1) % words.length; delay = 350; }
+            setTimeout(type, delay);
+        }
+        setTimeout(type, 1600);
+    }
+
+    // PARALLAX BLOBS
+    window.addEventListener('mousemove', (e) => {
+        const xR = (e.clientX / window.innerWidth - 0.5) * 2;
+        const yR = (e.clientY / window.innerHeight - 0.5) * 2;
+        ['blob-1','blob-2','blob-3'].forEach((cls, i) => {
+            const el = document.querySelector('.' + cls);
+            const f = [18, -14, 10][i];
+            if (el) el.style.transform = `translate(${xR*f}px,${yR*f*0.7}px)`;
+        });
+    });
+
+    updateActiveNav();
+});
+
+// LIGHTBOX
+function openLightbox(src) {
+    const lb = document.getElementById('lightbox');
+    document.getElementById('lightboxImg').src = src;
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+</script>
+</body>
+</html>
